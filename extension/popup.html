@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>租屋條件設定</title>
+  <style>
+    body { font-family: Arial; padding: 10px; width: 250px; }
+    label { display: block; margin-top: 8px; }
+    input { width: 100%; margin-top: 4px; }
+    button { margin-top: 12px; width: 100%; padding: 6px; }
+  </style>
+</head>
+<body>
+  <h3>設定條件</h3>
+  <label>預算範圍：
+    <input id="budget" placeholder="10000-20000">
+  </label>
+  <label>地點：
+    <input id="location" placeholder="台北市,大安區">
+  </label>
+  <label>其他條件：
+    <input id="extras" placeholder="可養寵物,廚房">
+  </label>
+  <button id="save">儲存</button>
+
+  <script src="popup.js"></script>
+</body>
+</html>

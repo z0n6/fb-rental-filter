@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "FB 租屋過濾器",
+  "version": "0.3",
+  "permissions": ["storage", "tabs", "scripting", "notifications"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["*://www.facebook.com/groups/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  }
+}
