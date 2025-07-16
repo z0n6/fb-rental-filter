@@ -1,0 +1,56 @@
+name: CI - FB Rental Filter
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Lint with flake8
+      run: |
+        pip install flake8
+        flake8 backend --ignore=E501,W503
+
+    - name: Check FastAPI can start
+      run: |
+        uvicorn main:app --port 8000 &
+        sleep 5
+        curl --fail http://127.0.0.1:8000/health
+
+  validate-extension:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Validate manifest.json
+      run: |
+        cd extension
+        if ! jq empty manifest.json; then
+          echo "manifest.json invalid JSON"
+          exit 1
+        fi
+
+    - name: Prepare extension package
+      run: |
+        cd extension
+        zip -r ../chrome-extension.zip .
